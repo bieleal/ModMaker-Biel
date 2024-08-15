@@ -120,6 +120,12 @@
             color: #ccc;
             font-size: 0.9rem;
         }
+
+        .visitas {
+            font-weight: bold;
+            color: #00FF00;
+            margin-left: 10px;
+        }
     </style>
 </head>
 
@@ -147,7 +153,7 @@
     </div>
 
     <footer>
-        &copy; 2024 TS BIEL - Todos os direitos reservados.
+        &copy; 2024 TS BIEL - Todos os direitos reservados. <span class="visitas">Visitas: <span id="visit-count">0</span></span>
     </footer>
 
     <script>
@@ -175,6 +181,12 @@
 
         updateTimer();
         const x = setInterval(updateTimer, 1000);
+
+        // Simula um contador de visitas
+        let visitCount = localStorage.getItem('visitCount') || 0;
+        visitCount++;
+        localStorage.setItem('visitCount', visitCount);
+        document.getElementById('visit-count').textContent = visitCount;
 
         // Solicita permissão para enviar notificações
         if (Notification.permission !== "granted") {
