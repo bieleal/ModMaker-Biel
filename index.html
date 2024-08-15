@@ -1,14 +1,168 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mod Maker</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilo para o corpo da página */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #1e1e1e, #282828);
+            background-size: 400% 400%;
+            color: #ffffff;
+            text-align: center;
+            animation: backgroundAnimation 20s ease infinite;
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .author {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: #00FF00;
+            font-weight: bold;
+        }
+
+        #timer {
+            font-size: 2rem;
+            margin: 30px 0;
+            font-family: 'Courier New', Courier, monospace;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .release-info {
+            margin-top: 50px;
+            font-size: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .disclaimer {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: #ffcc00;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #333;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Mod Maker</h1>
-    <p>Mod Maker é um aplicativo para criar mods de Minecraft usando código puro. Liberte sua criatividade e desenvolva mods personalizados com facilidade.</p>
-    <button disabled>Coming Soon</button>
+    <div class="container">
+        <h1>Mod Maker</h1>
+        <div class="author">by TS BIEL</div>
+        <p>
+            Bem-vindo ao <span class="highlight">Mod Maker</span>, o aplicativo revolucionário para criar mods de Minecraft utilizando código puro. Com o Mod Maker, você pode liberar sua criatividade e desenvolver mods personalizados com facilidade e eficiência. Nossa ferramenta foi projetada para tanto iniciantes quanto desenvolvedores experientes, permitindo que você transforme suas ideias em realidade digital no Minecraft.
+        </p>
+        <p>
+            O Mod Maker será lançado oficialmente em <span class="highlight">18 de Agosto de 2024 às 14:00</span>. Fique atento ao nosso contador abaixo para não perder o grande lançamento!
+        </p>
+        <div id="timer">00:00:00:00</div>
+        <div class="release-info">
+            Prepare-se para a melhor experiência de modding para Minecraft. Não perca o lançamento!
+        </div>
+        <div class="disclaimer">
+            Nota: A primeira versão do Mod Maker pode apresentar uma interface simples ou até mesmo alguns bugs. Contudo, nosso foco inicial está na programação e funcionalidade do aplicativo. Com o tempo e as atualizações, a interface será aprimorada e novas funcionalidades serão adicionadas.
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 TS BIEL - Todos os direitos reservados.
+    </footer>
+
+    <script>
+        const countdownDate = new Date("Aug 18, 2024 14:00:00").getTime();
+
+        const updateTimer = () => {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("timer").innerHTML = `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "00:00:00:00";
+                if (Notification.permission === "granted") {
+                    new Notification("O Mod Maker foi lançado!");
+                }
+            }
+        };
+
+        updateTimer();
+        const x = setInterval(updateTimer, 1000);
+
+        // Solicita permissão para enviar notificações
+        if (Notification.permission !== "granted") {
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    console.log("Permissão para notificações concedida.");
+                } else {
+                    console.log("Permissão para notificações negada.");
+                }
+            });
+        }
+    </script>
 </body>
+
 </html>
